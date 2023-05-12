@@ -365,19 +365,6 @@ let nonfiction_typos = [
     Random.int (n)
   ;;
   
-   (* let random_int n =
-    let m = 1 lsl 31 - 1 in
-    let a = 110515245 in
-    let c = 123945 in 
-    let seed = int_of_float (100000.0 *. Sys.time ()) in
-    let rec loop x =
-      let x' = (a * x + c) mod m in
-      if x' < n * (m / n) then x' mod n + 1 else loop x'
-    in
-    loop seed
-  ;; *)
-  
-
 (* This function greets the user when they start a conversation with the chatbot.
    Signature:  unit -> string *)
 let greet_user = 
@@ -388,31 +375,47 @@ let greet_user =
   greet_array.(idx)
 ;;
 
-
 (* this function takes the user's input as a string and return a list of string tokens that represent the user's input. 
    Signature: string -> string list *)
 
-   let is_whitespace (c: char) : bool =
-    match Char.code c with
-    | 9 | 10 | 13 | 32 -> true    (* Tab, LF, CR, space *)
-    | _ -> false
-  ;;
-  let tokenize (input: string) : string list =
-    let rec loop (start: int) (end_: int) (tokens: string list) : string list =
-      if end_ = String.length input then
-        let token = String.sub input start (end_ - start) in
-        if token <> "" then token :: tokens else tokens
-      else if is_whitespace input.[end_] then
-        let token = String.sub input start (end_ - start) in
-        if token <> "" then
-          loop (end_ + 1) (end_ + 1) (token :: tokens)
-        else
-          loop (end_ + 1) (end_ + 1) tokens
+   (* This function takes a character as input and returns true if it is a 
+   whitespace character (i.e. a space, tab, newline, or carriage return), 
+   and false otherwise. *)
+let is_whitespace (c: char) : bool =
+  match Char.code c with
+  | 9 | 10 | 13 | 32 -> true    (* Tab, LF, CR, space *)
+  | _ -> false
+;;
+
+(* This function takes a string as input and returns a list of its individual words, by splitting the string at whitespace characters. *)
+let tokenize (input: string) : string list =
+  let rec loop (start: int) (end_: int) (tokens: string list) : string list =
+    (* If we've reached the end of the input string, extract the last word, 
+       add it to the list of tokens if it's not empty, and return the reversed 
+       list of tokens. *)
+    if end_ = String.length input then
+      let token = String.sub input start (end_ - start) in
+      if token <> "" then token :: tokens else tokens
+    (* If we've encountered a whitespace character, extract the current word, 
+       add it to the list of tokens if it's not empty, and continue processing 
+       the next word by recursively calling the loop function with updated 
+       start and end indices. *)
+    else if is_whitespace input.[end_] then
+      let token = String.sub input start (end_ - start) in
+      if token <> "" then
+        loop (end_ + 1) (end_ + 1) (token :: tokens)
       else
-        loop start (end_ + 1) tokens
-    in
-    List.rev (loop 0 0 [])
-  ;;
+        loop (end_ + 1) (end_ + 1) tokens
+    (* If the current character is not a whitespace character, simply advance 
+       the end index and continue processing the current word. *)
+    else
+      loop start (end_ + 1) tokens
+  in
+  (* Call the loop function with initial start and end indices of zero, and an 
+     empty list of tokens. Reverse the resulting list of tokens to ensure that 
+     they are in the correct order. *)
+  List.rev (loop 0 0 [])
+;;
   
   
 (*Checking what category was requested by the user so we can store the array of books that belong to that category
