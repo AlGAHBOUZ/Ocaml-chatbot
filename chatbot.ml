@@ -519,11 +519,13 @@ let tokenize (input: string) : string list =
         else category
     ;;
     
-
+(*A function that takes a record reprsenting a book, then prints all the data stored in this record
+   Signature: record book -> ()*)
   let book_details (b: book) : string =
+    (*Printing all the data of the book stored in the record*)
     Printf.sprintf "Name: %s\nAuthor: %s\nDescription: %s\n" b.title b.author b.description
   ;;
-
+  
 (* Main function *)
 let main() =
   (* Print a welcome message for the user and print guidelines *)
