@@ -1,5 +1,5 @@
 open Random;;
-open Printf;;
+open Printf;; 
   type book = {title : string; author : string;  description: string};;
 
   let fantasy_books = [|{title = "Harry Potter"; author = "JK Rowling"; description = "In a world where magic, dragons, vampires, werewolves, goblins, giants and other things exist, a young wizard, named Harry Potter, and his friends Hermione Granger and Ron Weasley, all of whom are students at Hogwarts School of Witchcraft and Wizardry. The main story arc concerns Harry's conflict with Lord Voldemort, a dark wizard who intends to become immortal, overthrow the wizard governing body known as the Ministry of Magic and subjugate all wizards and Muggles (non-magical people)."};
@@ -485,51 +485,51 @@ let greet_user =
     Printf.sprintf "Name: %s\nAuthor: %s\nDescription: %s\n" b.title b.author b.description
   ;;
 
-
-
-
-  
-
-  (* Main function *)
-
+(* Main function *)
 let main() =
-printf "\nAl Gamel bema 7amel: Welcome to Al Gamel bema 7amel chat bot! \n 
-This Chat bot is a simple AI bot that suggests books based on a category or genre of your choice! \n 
-If you want to exit, Just type (quit) or (close) \n\n"; (**)
-
-printf "Al Gamel bema 7amel: %s\n" greet_user;
-
-let close = ref false in
-while not !close do
+  (* Print a welcome message for the user and print guidelines *)
+  printf "\n\tWelcome to Al Gamel bema 7amel chat bot!\n 
+  This Chat bot is a simple AI bot that suggests books based on a category or genre of your choice!\n 
+  If you want to exit, Just type (quit) or (close)\n\n"; (**)
+  (* Greet the user *)
+  printf "Al Gamel bema 7amel: %s\n" greet_user;
+  (* Define a "close" variable to control the chat flow *)
+  let close = ref false in
+  (* while loop for the chat *)
+  while not !close do
+    (* Create a list of categories *)
     let categories = ["fiction"; "horror"; "crime"; "fantasy"; "sci-fi"; "history"; "non-fiction"] in
-    (* Greet the user *)
+    (* Ask the user to enter a message and convert the message to lowercase characters *)
     printf "\nUser: ";
     let str_input = read_line () |> String.lowercase_ascii in
+    (* If the user entered "quit" or "close" shutdown the program *)
     if str_input = "quit"  || str_input = "close"  then close := true
     else 
-    let str_lst = tokenize str_input in
-    best_book str_lst;
-    let category = get_category str_lst categories in
-    if category = "Category not found" then printf "\nAl Gamel bema 7amel: sorry, I can't do this with my current capalities, because no librairs are working! And there was no time!\n";
-    if category <> "Category not found"  then
-      let book_listo = ref (book_suggestions category) in  
-      printf "\nAl Gamel bema 7amel: Sure, here are some epic %s book suggestions: \n \n" category;
-      
-    for i = 0 to Array.length !book_listo -1 do
-      printf "Al Gamel bema 7amel: %s\n" (book_details (!book_listo.(i)));
-      
-    done;
-    printf "\nAl Gamel bema 7amel: Want any more suggestions? Just enter the genre or category ! that you like!\n
-    AND remmber if you want to quit, Just type (quit) or (close) \n\n";
+      (* Call tokenize function and store the list of strings (of the input) in str_lst *)
+      let str_lst = tokenize str_input in
+      best_book str_lst;
+      (* Get which category the user asked for *)
+      let category = get_category str_lst categories in
+      (* If the category isn't not found print a sorry message *)
+      if category = "Category not found" then printf "\nAl Gamel bema 7amel: sorry, I can't do this with my current capalities, because no librairs are working! And there was no time!\n";
+      if category <> "Category not found"  then
+        (* Get a list of books for the category which the user asked for and print the books in the list     *)
+        let book_listo = ref (book_suggestions category) in  
+        printf "\nAl Gamel bema 7amel: Sure, here are some epic %s book suggestions: \n \n" category;
+        for i = 0 to Array.length !book_listo -1 do
+          printf "Al Gamel bema 7amel: %s\n" (book_details (!book_listo.(i)));
+        done;
+        (* Print a message asking for the user's input *)
+        printf "\nAl Gamel bema 7amel: Want any more suggestions? Just enter the genre or category ! that you like!\n
+        AND remmber if you want to quit, Just type (quit) or (close) \n\n";
   done;
-    printf "\nAl Gamel bema 7amel : It has been a pleasure helping you, I hope you enjoyed this experince... See you soon :)\n";
+  (* Print a Goodbye message *)
+  printf "\nAl Gamel bema 7amel : It has been a pleasure helping you, I hope you enjoyed this experince... See you soon :)\n";
 ;;
 
-  let () = 
-  
-    main()
-
-  
+let () = 
+  (* Run the program *)
+  main()  
 ;;
 
 (*
