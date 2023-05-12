@@ -1,6 +1,11 @@
+(*Importing the libraries that we will use in our code*)
 open Random;;
-open Printf;; 
+open Printf;;
+
+(*Creating a record named book, that stores the title of the book ,the author of the book, and what the book is about*)
   type book = {title : string; author : string;  description: string};;
+
+  (*Creating an array to store some of the fantasy books that can be suggested by our Chat bot*)
 
   let fantasy_books = [|{title = "Harry Potter"; author = "JK Rowling"; description = "In a world where magic, dragons, vampires, werewolves, goblins, giants and other things exist, a young wizard, named Harry Potter, and his friends Hermione Granger and Ron Weasley, all of whom are students at Hogwarts School of Witchcraft and Wizardry. The main story arc concerns Harry's conflict with Lord Voldemort, a dark wizard who intends to become immortal, overthrow the wizard governing body known as the Ministry of Magic and subjugate all wizards and Muggles (non-magical people)."};
 
@@ -26,8 +31,7 @@ open Printf;;
   
   |];;
 
-  (*
-  *)
+(*Creating an array to store some of the fiction books that can be suggested by our Chat bot*)
   let fiction_books = [|{title = "The Hobbit"; author = "J.R.R. Tolkien"; description = "In a hole in the ground there lived a hobbit. Not a nasty, dirty, wet hole, filled with the ends of worms and an oozy smell, nor yet a dry, bare, sandy hole with nothing in it to sit down on or to eat: it was a hobbit-hole, and that means comfort. Written for J.R.R. Tolkien own children, The Hobbit met with instant critical acclaim when it was first published in 1937. Now recognized as a timeless classic, this introduction to the hobbit Bilbo Baggins, the wizard Gandalf, Gollum, and the spectacular world of Middle-earth recounts of the adventures of a reluctant hero, a powerful and dangerous ring, and the cruel dragon Smaug the Magnificent. The text in this 372-page paperback edition is based on that first published in Great Britain by Collins Modern Classics (1998), and includes a note on the text by Douglas A. Anderson (2001)."};
 
   {title = "Alice's Adventures in Wonderland"; author = "Lewis Carroll"; description = "I can't explain myself, I'm afraid, sir, said Alice, Because I'm not myself, you see. When Alice sees a white rabbit take a watch out of its waistcoat pocket she decides to follow it, and a sequence of most unusual events is set in motion. This mini book contains the entire topsy-turvy stories of Alice's Adventures in Wonderland and Through the Looking-Glass, accompanied by practical notes and Martina Pelouso's memorable full-colour illustrations."};
@@ -73,6 +77,7 @@ open Printf;;
 
   |];;
 
+(*Creating an array to store some of the crime novels that can be suggested by our Chat bot*)
 
   let crime_books = [|
     
@@ -130,6 +135,7 @@ open Printf;;
 
   |];;
 
+  (*Creating an array to store some of the sci-fi novels that can be suggested by our Chat bot*)
   let sci_fi_books = [|
 
 
@@ -176,6 +182,7 @@ open Printf;;
 
     |];;
 
+    (*Creating an array to store some of the history books that can be suggested by our Chat bot*)
   let history_books = [|
 
   {title = "What Is History?"; author = "Edward Hallett Carr"; description = "Famous for his hefty History of Soviet Russia, E. H. Carr foray into historiography (that is, the study of written history) was panned by critics at first. Initially written off as dangerous relativism, it is now considered a foundational text for historians, one which probes at the very seams of the discipline. By asking what exactly historical knowledge is and what constitutes history as we have come to understand it, Carr provides a compelling and masterful critique of the biases of historians and their moralized narratives of history. This groundbreaking text also interrogates such notions as fact, science, morality, individualism, and society. This masterpiece is referenced in countless college applications for a reason — it is a formidable dive into history as a discipline, and laid the foundations for the subject as it exists in the modern world."};
@@ -199,6 +206,7 @@ open Printf;;
 
     |];;
 
+    (*Creating an array to store some of the non-fiction books that can be suggested by our Chat bot*)
   let non_fiction = [|
 
   {title = "Guns, Germs, and Steel: The Fates of Human Societies"; author = "Jared Diamond"; description = "Here is another book that frequents the reading lists of politics and history majors the world over! Many have theorized on why certain human societies have failed while others have thrived — but perhaps none have done it as astutely as Jared Diamond has in Guns, Germs, and Steel. The three things featured the title make up the nexus that Diamond presents as being fundamental to the development (or lack thereof) of human society. Though Diamond's thesis has as many detractors as it has supporters, it is worth reading to see which side of the debate you fall on."};
@@ -222,7 +230,7 @@ open Printf;;
   {title = "The Structure of Scientific Revolutions"; author = "Thomas Kuhn"; description = " With The Structure of Scientific Revolutions, Kuhn challenged long-standing linear notions of scientific progress, arguing that transformative ideas do not arise from the day-to-day, gradual process of experimentation and data accumulation but that the revolutions in science, those breakthrough moments that disrupt accepted thinking and offer unanticipated ideas, occur outside of “normal science,” as he called it. Though Kuhn was writing when physics ruled the sciences, his ideas on how scientific revolutions bring order to the anomalies that amass over time in research experiments are still instructive in our biotech age."};
   |];;
 
-
+(*Creating an array to store some of the horror novels that can be suggested by our Chat bot*)
   let horror_books = [|
     
     {title = "Dracula"; author = "Bram Stoker"; description = "When Jonathan Harker visits Transylvania to help Count Dracula with the purchase of a London house, he makes a series of horrific discoveries about his client. Soon afterwards, various bizarre incidents unfold in England: an apparently unmanned ship is wrecked off the coast of Whitby; a young woman discovers strange puncture marks on her neck; and the inmate of a lunatic asylum raves about the 'Master' and his imminent arrival."};
@@ -254,7 +262,7 @@ open Printf;;
 
     |];;
 
-
+(*Creating a list that stores all the possible typos in the word (Fiction) so we can resolve that typo*)
     let fiction_typos = ["fictio"; "fictin"; "fction"; "ficion"; "fition"; "fction"; "iction";
   "fictionn"; "fictioon"; "fictiion"; "ficttion"; "ficction"; "fiction"; "ffiction";
   "fictiomn"; "fictiobn"; "fictiogn"; "fictiohn"; "fictiojn"; "fictipon"; "fictilon"; "fictiion"; "fictikon"; "fictoion";
@@ -267,6 +275,7 @@ open Printf;;
   "viction"; "biction"; "diction"; "eiction"; "riction"; "tiction"; "ciction";
   "fiction"; "fictoin"; "fiction"; "fiction"; "fiction"; "fiction"; "fiction";]
   
+  (*Creating a list that stores all the possible typos in the word (Horror) so we can resolve that typo*)
 let horror_typos = [
   "horor"; "hrror"; "horor"; "horor"; "hrror"; "orror";
   "horrorr"; "horroor"; "horrror"; "horrror"; "hoorror"; "hhorror";
@@ -278,6 +287,7 @@ let horror_typos = [
   "hlrror"; "hirror"; "hkrror"; "jorror"; "norror"; "morror"; "gorror"; "torror"; "yorror"; "uorror"; "borror";
 ]
 
+(*Creating a list that stores all the possible typos in the word (Crime) so we can resolve that typo*)
 let crime_typos = [
   "crim"; "crie"; "crme"; "cime"; "rime";
   "crimee"; "crimme"; "criime"; "crrime"; "ccrime";
@@ -287,6 +297,7 @@ let crime_typos = [
   "crije"; "crike"; "crome"; "crkme"; "crlme"; "crume"; "crjme"; "ctime"; "cfime"; "cgime"; "ceime"; "cdime";
   "vrime"; "xrime"; "srime"; "drime"; "frime"; "criem"; "crmie"; "cirme"; "rcime"; "crime";
 ]
+(*Creating a list that stores all the possible typos in the word (Fantasy) so we can resolve that typo*)
 
 let fantasy_typos = [
   "fantas"; "fantay"; "fntasy"; "fanasy"; "fatasy"; "fntasy"; "antasy";
@@ -304,6 +315,7 @@ let fantasy_typos = [
   "fatnasy"; "fnatasy"; "afntasy"; "fantasy";
 ]
 
+(*Creating a list that stores all the possible typos in the word (History) so we can resolve that typo*)
 let history_typos = [
   "histor"; "histoy"; "histry"; "hisory"; "hitory"; "hstory"; "istory";
   "historyy"; "historry"; "histoory"; "histtory"; "hisstory"; "hiistory"; "hhistory";
@@ -320,7 +332,7 @@ let history_typos = [
   "ihstory"; "history";
 ]
 
-
+(*Creating a list that stores all the possible typos in the word (non-fiction) so we can resolve that typo*)
 let nonfiction_typos = [
   "on-fiction"; "nn-fiction"; "non-fction"; "non-ficion"; "non-fition"; "non-fction"; "non-iction"; "nonfiction";
   "on-fiction"; "nn-fiction"; "on-fiction"; "non-fictionn"; "non-fictioon"; "non-fictiion"; "non-ficttion"; "non-ficction";
@@ -346,7 +358,7 @@ let nonfiction_typos = [
 
 
 
-(* Helper function: Random function 
+(* Helper function: Random function that creates a random number using the built in functions in the library (Random)
    Signature: int -> int *)
    let random_int n =
     Random.self_init();
@@ -369,14 +381,17 @@ let nonfiction_typos = [
 (* This function greets the user when they start a conversation with the chatbot.
    Signature:  unit -> string *)
 let greet_user = 
+  (*Creating an array of greetings*)
   let greet_array = [|"Hello there, how can I help you?"; "How are you today? And how can I be of help?"; "Hi, what can I assist you with today?"|] in 
+  (*Then accesing a random greeting from that array*)
   let idx = random_int ((Array.length greet_array) - 1) in
   greet_array.(idx)
 ;;
 
 
-(* this function should take the user's input as a string and return a list of string tokens that represent the user's input. 
+(* this function takes the user's input as a string and return a list of string tokens that represent the user's input. 
    Signature: string -> string list *)
+
    let is_whitespace (c: char) : bool =
     match Char.code c with
     | 9 | 10 | 13 | 32 -> true    (* Tab, LF, CR, space *)
@@ -400,7 +415,9 @@ let greet_user =
   ;;
   
   
-
+(*Checking what category was requested by the user so we can store the array of books that belong to that category
+   Signature: string -> string array
+   *)
     let book_arr category_str =  
       match category_str with
       | a when a = "fiction" -> fiction_books
@@ -414,23 +431,38 @@ let greet_user =
       | a -> [||]
     ;;
 
-
+(*This function creates an array of book suggestions of a radom size based on the category entered by the user
+   Signature: string -> string array
+   *)
     let book_suggestions category_str =
+      (*Declaring an array to store the book suggestions*)
       let book_list = ref [||] in
+      (*Storing the array of books that reprsent the category requested*)
       let curr_arr = book_arr category_str in
+      (*Genrating A random size between 0 and 2, then adding 1 to the result in case the size was 0
+         Because if size was 0, no books will be printed!*)
       let curr_size = random_int(3)+1 in
+         (*Looping from 0 to the size of our book suggestion array*)
       for i = 0 to curr_size-1 do
+        (*Genrating a radnom index so we can get a random book from our array of books*)
         let curr_idx = random_int((Array.length curr_arr)) in
+        (*Checking if the  book suggestion array was empty*)
         if Array.length !book_list-1 = 0 then
+          (*If it was empty we add a random book from the category requested to the book suggestion array*)
           book_list := Array.append !book_list [|curr_arr.(curr_idx)|];
+          (*Declaring a counter so it can help us spot any duplicates*)
           let ctr = ref 0 in
+          (*Looping on our book suggestion array to check that the current book isn't a duplicate*)
           for i = 0 to Array.length !book_list-1 do
           if (curr_arr.(curr_idx).title <> !book_list.(i).title) then        
             ctr := !ctr+1;
         done;
+        (*If the ctr is of the same size as our book suggestion array, this means that the current book is a unique book*)
         if !ctr = Array.length !book_list then
+          (*So we add it to our book suggestion array*)
           book_list := Array.append !book_list [|curr_arr.(curr_idx)|];
       done;
+      (*Finally we return our book suggestion array*)
       !book_list
     ;;
 
@@ -440,11 +472,15 @@ let greet_user =
       curr_arr.(curr_idx)
     ;; *)
 
-  
+  (*This function checks if the word best was included in the user's input
+     If the word best was indeed found, it prints the title of the novel I wrote; because It's the best*)
       let rec best_book str_lst = 
+        (*Matching the string of tokens that reprsent the users input to search for the word best*)
       match str_lst with
       | [] -> ()
+      (*If the word best was found, we print the title of my novel*)
       | head::tail  when (String.lowercase_ascii head = "best")  -> Printf.printf("\nIt's well know that the best of the best is Al Kahf Al Ghamed (The Mysterios Cave), by the aspiring best selling author: Sajed Samer, however; one must say that there might be other books that come close to the brilliance of that epic novel \n \n")
+      (*Else we continue searching*)
       | head::tail  -> best_book (tail)
       ;;
 
