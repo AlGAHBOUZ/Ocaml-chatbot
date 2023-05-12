@@ -1,6 +1,7 @@
 open Random;;
 open Printf;;
 
+(* Define a type for book containing the book title, author and description *)
   type book = {title : string; author : string;  description: string};;
 
   let fantasy_books = [|{title = "Harry Potter"; author = "JK Rowling"; description = "In a world where magic, dragons, vampires, werewolves, goblins, giants and other things exist, a young wizard, named Harry Potter, and his friends Hermione Granger and Ron Weasley, all of whom are students at Hogwarts School of Witchcraft and Wizardry. The main story arc concerns Harry's conflict with Lord Voldemort, a dark wizard who intends to become immortal, overthrow the wizard governing body known as the Ministry of Magic and subjugate all wizards and Muggles (non-magical people)."};
