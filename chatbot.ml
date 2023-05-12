@@ -263,7 +263,7 @@ open Printf;;
     |];;
 
 (*Creating a list that stores all the possible typos in the word (Fiction) so we can resolve that typo*)
-    let fiction_typos = ["fictio"; "fictin"; "fction"; "ficion"; "fition"; "fction"; "iction";
+    let fiction_typos = ["fictio"; "fictin"; "fction"; "ficion";"ficton" ; "fition"; "fction"; "iction";
   "fictionn"; "fictioon"; "fictiion"; "ficttion"; "ficction"; "fiction"; "ffiction";
   "fictiomn"; "fictiobn"; "fictiogn"; "fictiohn"; "fictiojn"; "fictipon"; "fictilon"; "fictiion"; "fictikon"; "fictoion";
   "fictkion"; "fictlion"; "fictuion"; "fictjion"; "ficytion"; "ficgtion"; "fichtion"; "ficrtion"; "ficftion"; "fivction";
@@ -367,11 +367,11 @@ let nonfiction_typos = [
   
 (* This function greets the user when they start a conversation with the chatbot.
    Signature:  unit -> string *)
-let greet_user = 
+let greet_user user = 
   (*Creating an array of greetings*)
-  let greet_array = [|"Hello there, how can I help you?"; "How are you today? And how can I be of help?"; "Hi, what can I assist you with today?"|] in 
+  let greet_array = [|"How can I be the Robin to your Batman today?"; "In what way may I unleash my superpowers for your benefit?"; "Need a hand, a paw, or perhaps a tentacle? What can I do for you?"|] in 
   (*Then accesing a random greeting from that array*)
-  let idx = random_int ((Array.length greet_array) - 1) in
+  let idx = random_int ((Array.length greet_array)) in
   greet_array.(idx)
 ;;
 
@@ -526,14 +526,51 @@ let tokenize (input: string) : string list =
     Printf.sprintf "Name: %s\nAuthor: %s\nDescription: %s\n" b.title b.author b.description
   ;;
   
+  let rec delay seconds =
+    let start_time = Sys.time () in
+    let rec loop () =
+      if Sys.time () -. start_time >= seconds then ()
+      else loop ()
+    in
+    loop ()
+  ;;
+  
+  let think () =
+    print_string "...Camel is thinking...";
+    flush stdout;  (* Flush the output buffer to ensure it's printed immediately *)
+    delay 2.0;  (* Delay for 2 seconds *)
+    print_endline "\n"
+  ;;
+  
+
+  let goodbye_delay () =
+    print_string "...Putting on my pajamas and shutting down...";
+    flush stdout;  (* Flush the output buffer to ensure it's printed immediately *)
+    delay 3.0;  (* Delay for 2 seconds *)
+    print_endline "\n"
+  ;;
+  
+    
+
+  let ask_user_name = 
+    (*Creating an array of greetings*)
+    let ask_user_name_array = [|"Hey there! What do your friends call you? "; "May I have the honor of knowing your name? "; "What do your friends and family call you, besides awesome? "; "What's the name behind that charming personality? "|] in 
+    (*Then accesing a random greeting from that array*)
+    let idx = random_int ((Array.length ask_user_name_array)) in
+    ask_user_name_array.(idx);
+  ;;
+
+
 (* Main function *)
 let main() =
   (* Print a welcome message for the user and print guidelines *)
-  printf "\n\tWelcome to Al Gamel bema 7amel chat bot!\n 
-  This Chat bot is a simple AI bot that suggests books based on a category or genre of your choice!\n 
-  If you want to exit, Just type (quit) or (close)\n\n"; (**)
+  printf "\n\t\tWelcome to Al Gamel bema 7amel chat bot!\nThis Chat bot is a simple AI bot that suggests books based on a category or genre of your choice!\nIf you want to exit, Just type (quit) or (close)\n\n"; (**)
   (* Greet the user *)
-  printf "Al Gamel bema 7amel: %s\n" greet_user;
+  think ();
+  (* Ask for the User Name *)
+  printf "%s" ask_user_name;
+  let user_name = read_line() in
+  printf "\n- Al Gamel bema 7amel: %s, %s\n" (user_name)(greet_user user_name);
   (* Define a "close" variable to control the chat flow *)
   let close = ref false in
   (* while loop for the chat *)
@@ -541,7 +578,7 @@ let main() =
     (* Create a list of categories *)
     let categories = ["fiction"; "horror"; "crime"; "fantasy"; "sci-fi"; "history"; "non-fiction"] in
     (* Ask the user to enter a message and convert the message to lowercase characters *)
-    printf "\nUser: ";
+    printf "\n- %s: " user_name;
     let str_input = read_line () |> String.lowercase_ascii in
     (* If the user entered "quit" or "close" shutdown the program *)
     if str_input = "quit"  || str_input = "close"  then close := true
@@ -552,20 +589,22 @@ let main() =
       (* Get which category the user asked for *)
       let category = get_category str_lst categories in
       (* If the category isn't not found print a sorry message *)
-      if category = "Category not found" then printf "\nAl Gamel bema 7amel: sorry, I can't do this with my current capalities, because no librairs are working! And there was no time!\n";
+      if category = "Category not found" then printf "\n- Al Gamel bema 7amel: sorry, I can't do this with my current capalities, because no librairs are working! And there was no time!\n";
       if category <> "Category not found"  then
         (* Get a list of books for the category which the user asked for and print the books in the list     *)
         let book_listo = ref (book_suggestions category) in  
-        printf "\nAl Gamel bema 7amel: Sure, here are some epic %s book suggestions: \n \n" category;
+        printf "\n- Al Gamel bema 7amel: Sure, here are some epic %s book suggestions: \n \n" category;
         for i = 0 to Array.length !book_listo -1 do
-          printf "Al Gamel bema 7amel: %s\n" (book_details (!book_listo.(i)));
+          think ();
+          printf "- Al Gamel bema 7amel: %s\n ================================================================== \n" (book_details (!book_listo.(i)));
         done;
         (* Print a message asking for the user's input *)
-        printf "\nAl Gamel bema 7amel: Want any more suggestions? Just enter the genre or category ! that you like!\n
-        AND remmber if you want to quit, Just type (quit) or (close) \n\n";
+        think();
+        printf "\n- Al Gamel bema 7amel: Want any more suggestions? Just enter the genre or category ! that you like! AND remmber if you want to quit, Just type (quit) or (close) \n\n";
   done;
   (* Print a Goodbye message *)
-  printf "\nAl Gamel bema 7amel : It has been a pleasure helping you, I hope you enjoyed this experince... See you soon :)\n";
+  goodbye_delay();
+  printf "- Al Gamel bema 7amel : It has been a pleasure helping you, I hope you enjoyed this experince... See you soon :)\n";
 ;;
 
 let () = 
@@ -574,10 +613,8 @@ let () =
 ;;
 
 (*
+might do:
 
-
-User:  string-> string
-Ask the user for his name and store it
 
 Book Author:
 string -> record (or just prints the author if found)
@@ -605,6 +642,14 @@ if the user asks for the same type many times, print sth like "Here are some mor
 so we can put the catogris asked by the user in an array that gets checked each time we call the ain
 in addition we will probably have to make the book_suggetsion array global
 
+*)
+
+
+(*
+Defintely Do:
+
+User:  string-> string
+Ask the user for his name and store it   
 
 if time, Small talk: str_lst (tokenized) -> string
 Things not related to our topic, questions like:
@@ -614,4 +659,5 @@ What does AI mean and do
 etc..
 
 
+Secret Keywords, 5 keywords that prints something fun/special if you know these keywords
 *)
