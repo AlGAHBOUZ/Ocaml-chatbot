@@ -496,16 +496,19 @@ let best_bool = ref false;;
       | head::tail  -> more_books (tail)
       ;;
 
-
+(*Creating a function that handles any questions irrleavent to books, basically a function for small talk*)
+(*Signature: stringlist -> string*)
       let small_talk str_lst =
+        (*Defining a few counters as refrences, so we can figure which question was asked by the user each time the function is called*)
         let identity_ctr = ref 0 in
         let builder_ctr = ref 0 in 
         let how_ctr = ref 0 in
         let lang_ctr = ref 0 in
         let what_ctr = ref 0 in
         let help_ctr = ref 0 in
-
         let purpose_ctr = ref 0 in 
+
+        (*Intiliazing the counters with zero once more, so when the function is called again they return to zero*)
         identity_ctr := 0;
         builder_ctr := 0;
         how_ctr:= 0;
@@ -513,7 +516,7 @@ let best_bool = ref false;;
         what_ctr :=0;
         help_ctr := 0;
         purpose_ctr := 0;
-
+(*Defning a varible that stores a redundant value from the recursive function that increments the counters based on certain keywords*)
         let boi =
         let rec sth str_lst = 
         match str_lst with
@@ -530,7 +533,9 @@ let best_bool = ref false;;
         | head::tail  -> sth (tail)
       in sth str_lst
     in
+    (*A usless print message, used to avoid a warning message when running the program*)
         printf "%s" boi;
+        (*Returning a certain message based on the value of our counters*)
         if !identity_ctr = 3 then "who"
         else if (!builder_ctr =3) then "build"
         else if (!how_ctr = 3) then "how"
@@ -616,6 +621,7 @@ let best_bool = ref false;;
     (* Define a "close" variable to control the chat flow *)
   let close = ref false;;
   let category_ctr = ref 0;;
+   (*Defining a category array to store the categoris*)
   let category_arr = ref [||];;
 (* Main function *)
 let main() =
@@ -641,18 +647,17 @@ let main() =
       let str_lst = tokenize str_input in
       best_book str_lst;
       let talk_with_me = small_talk str_lst in
-
-(*New stuff here*)
-
+      (*If no question were asked realted to the chatbot itself, we start checking if a genre was entered*)
       if talk_with_me = "" then (
         (* Get which category the user asked for *)
       let category = get_category str_lst categories in
       let more = ref (more_books str_lst) in
-      (* If the category isn't not found print a sorry message *)
+      (* If the category isn't not found, print a sorry message *)
       if category = "Category not found" && not !more && not !best_bool then printf "\n- Al Gamel bema 7amel: sorry, I can't do this with my current capabilities, because no libraries are working! And there was no time!\n";
       if category <> "Category not found" then ( (* Get a list of books for the category which the user asked for and print the books in the list     *)
         more := false;
         category_ctr  := !category_ctr  + 1;
+        (*Pushing the current category into the array*)
         category_arr := Array.append !category_arr [|category|];
         let book_listo = ref (book_suggestions category) in  
         printf "\n- Al Gamel bema 7amel: Sure, here are some epic %s book suggestions: \n \n" category;
@@ -660,14 +665,16 @@ let main() =
           think ();
           printf "- Al Gamel bema 7amel: %s\n ================================================================== \n" (book_details (!book_listo.(i)));
         done;
+        (* Print a message asking for the user's input *)
         think();
         printf "\n- Al Gamel bema 7amel: Want any more help? Just enter a book genre or category! Or Ask me sth about myself! And remember, if you want to quit, just type (quit) or (close) \n\n";
     
           )
        ;
-          (* Print a message asking for the user's input *)
-        
+          
+        (*Checking if the user asked for more books of the same genre as before*)
         if !more = true && !category_ctr <> 0 then (
+          (*Setting the current category as the last category entered by the user*)
  let old_category = !category_arr.(Array.length !category_arr -1) in
             let book_listo2 = ref (book_suggestions old_category) in  
             printf "\n- Al Gamel bema 7amel: Back for some more %s... here you are: \n \n" old_category;
@@ -680,13 +687,14 @@ let main() =
       )
         )
         ;
+        (*Printing an answer based on the question asked by the user*)
           if talk_with_me = "who" then printf "- Al Gamel bema 7amel: I am a naive AI chatbot named Al Gamel bema 7amel that was written with Ocaml\nI have some knowledge in litreature that allows me to suggest books, and some insit about myself, and how I was made\n If you are curios about anything else, Just ASK! Or you can give me a gengre or a categroy of books, and i Will suggest some to you\nOr if you want to quit just type (quit) or (close)\n"; 
          if talk_with_me = "how" then printf "- Al Gamel bema 7amel: I was written using the paradim of functional programming using the very bestest langauge that's known worldwide, and was used to make, NOTHING! OCAML!!!\n If you are curios about anything else, Just ASK! Or you can give me a gengre or a categroy of books, and i Will suggest some to you\nOr if you want to quit just type (quit) or (close)\n";
            if talk_with_me = "lang" then printf "- Al Gamel bema 7amel: The very bestest langauge that's known worldwide, and was used to make, NOTHING! OCAML!!!\n If you are curios about anything else, Just ASK! Or you can give me a gengre or a categroy of books, and i Will suggest some to you\nOr if you want to quit just type (quit) or (close)\n";
           if talk_with_me = "build" then printf "- Al Gamel bema 7amel: The very bestest team, Ayman, Sajed, MK and Haytham! We hope you enjoy using it and that this bot doesn't crash!!!\n If you are curios about anything else, Just ASK! Or you can give me a gengre or a categroy of books, and i Will suggest some to you\nOr if you want to quit just type (quit) or (close)\n";
           if talk_with_me = "help" then printf "- Al Gamel bema 7amel: Well, since I am naive, and the programers who made me had no time to write anything and they couldn't run any libraries, I can only suggest a few random books in different Genres, so give me a book genre and I will give you sth that i hope you can enjoy!\n If you are curios about anything else, Just ASK! Or you can give me a gengre or a categroy of books, and i Will suggest some to you\nOr if you want to quit just type (quit) or (close)\n";
             
-                       (* Print a message asking for the user's input *)
+                
       (* think();
       printf "\n- Al Gamel bema 7amel: Want any more help? Just enter a book genre or category! Or Ask me sth about myself! And remember, if you want to quit, just type (quit) or (close) \n\n";
       
@@ -708,11 +716,6 @@ let () =
 
 (*
 might do:
-
-
-Book Author:
-string -> record (or just prints the author if found)
-
   
 How you feeling: str_lst (tokenized) -> string
 Ask the user how he feels, and respond respictively 
@@ -731,94 +734,9 @@ User: Stuff
 Chat bot: "Oh i like reading this one, but i haven't read that one, OH, this third one looks intresting, what does it talk about?"
 etc...
 
-add this:
-if the user asks for the same type many times, print sth like "Here are some more bla bla books" or "Back for some bla bla? Take these"
-so we can put the catogris asked by the user in an array that gets checked each time we call the ain
-in addition we will probably have to make the book_suggetsion array global
-
 *)
 
-(*
-   
-
-(* Main function *)
-let main() =
-  let ref category_arr = [||] in
-  let category_ctr = ref 0 in
-  (* Print a welcome message for the user and print guidelines *)
-  printf "\n\t\tWelcome to Al Gamel bema 7amel chat bot!\nThis Chat bot is a simple AI bot that suggests books based on a category or genre of your choice!\nIf you want to exit, Just type (quit) or (close)\n\n"; (**)
-  (* Greet the user *)
-  think ();
-  (* Ask for the User Name *)
-  printf "%s" ask_user_name;
-  let user_name = read_line() in
-  printf "\n- Al Gamel bema 7amel: %s, %s\n" user_name(greet_user user_name);
-  (* Define a "close" variable to control the chat flow *)
-  let close = ref false in
-  (* while loop for the chat *)
-  while not !close do
-    (* Create a list of categories *)
-    let categories = ["fiction"; "horror"; "crime"; "fantasy"; "sci-fi"; "history"; "non-fiction"] in
-    (* Ask the user to enter a message and convert the message to lowercase characters *)
-    printf "\n- %s: " user_name;
-    let str_input = read_line () |> String.lowercase_ascii in
-    (* If the user entered "quit" or "close" shutdown the program *)
-    if str_input = "quit"  || str_input = "close"  then close := true
-    else 
-      (* Call tokenize function and store the list of strings (of the input) in str_lst *)
-      let str_lst = tokenize str_input in
-      best_book str_lst;
-      (* Get which category the user asked for *)
-      let category = get_category str_lst categories in
-      let more = ref (more_books str_lst) in
-      (* If the category isn't not found print a sorry message *)
-      if category = "Category not found"  && (!best_bool = false) && (!more = false) then printf "\n- Al Gamel bema 7amel: sorry, I can't do this with my current capalities, because no librairs are working! And there was no time!\n";
-      if category <> "Category not found"  then
-        (* Get a list of books for the category which the user asked for and print the books in the list     *)
-        more := false;
-        category_ctr := category_ctr +1;
-        category_arr:= Array.append !category_arr [|category|];
-        let book_listo = ref (book_suggestions category) in  
-        printf "\n- Al Gamel bema 7amel: Sure, here are some epic %s book suggestions: \n \n" category;
-        for i = 0 to Array.length !book_listo -1 do
-          think ();
-          printf "- Al Gamel bema 7amel: %s\n ================================================================== \n" (book_details (!book_listo.(i)));
-        done;
-        (* Print a message asking for the user's input *)
-        think();
-        printf "\n- Al Gamel bema 7amel: Want any more suggestions? Just enter the genre or category ! that you like! AND remmber if you want to quit, Just type (quit) or (close) \n\n";
-  done;
-  if !more = true && !category_ctr <> 0 then let old_category = !category_arr.(Array.length !category_arr -1) in
-  let book_listo2 = ref (book_suggestions old_category) in  
-        printf "\n- Al Gamel bema 7amel: Back for some more %s... here you are: \n \n" old_category;
-        for i = 0 to Array.length !book_listo2 -1 do
-          think ();
-          printf "- Al Gamel bema 7amel: %s\n ================================================================== \n" (book_details (!book_listo2.(i)));
-        done;
-        (* Print a message asking for the user's input *)
-        think();
-        printf "\n- Al Gamel bema 7amel: Want any more suggestions? Just enter the genre or category ! that you like! AND remmber if you want to quit, Just type (quit) or (close) \n\n";
-  done;
-  (* Print a Goodbye message *)
-  goodbye_delay();
-  printf "- Al Gamel bema 7amel : It has been a pleasure helping you, I hope you enjoyed this experince... See you soon :)\n";
-;;
-
-
-*)
 (*
 Defintely Do:
-
-User:  string-> string
-Ask the user for his name and store it   
-
-if time, Small talk: str_lst (tokenized) -> string
-Things not related to our topic, questions like:
-Who made you?
-What do you do?
-What does AI mean and do
-etc..
-
-
 Secret Keywords, 5 keywords that prints something fun/special if you know these keywords
 *)
