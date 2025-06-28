@@ -1,5 +1,12 @@
 # Al Gamel Chat Bot
 Al Gamel Chat Bot is a simple AI-based chatbot written in OCaml. The chatbot can suggest books based on different categories or genres and engage in small talk with its users. It provides a fun and interactive way to discover new books and engage in conversations, like a robotic librarian. 
+
+## Demo Video
+
+
+https://github.com/user-attachments/assets/6a711506-2347-4a0a-b9e6-63124bece250
+
+
 ## Features
 - Book Suggestions: Users can request book by specifying a book category or genre. The chatbot provides random book suggestions based on the chosen category.
 
